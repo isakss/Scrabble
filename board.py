@@ -15,6 +15,25 @@ class Board:
     def insert_into_board(self, x, y, value):
         self.grid[x][y] = value
 
+    def get_value_at_pos(self, row, col):
+        that_pos = self.grid[row][col]
+        if that_pos == "*":
+            return False
+        else:
+            return that_pos
+
+    def add_word(self, letter_list, row, col, direction):
+        total_points = 0
+        for letter in letter_list:
+            self.insert_into_board(row, col, letter)
+            total_points += letter.points
+            if direction == "V":
+                row += 1
+            else:
+                col += 1
+
+        return total_points
+
     def __str__(self):
         ret_str = ""
 

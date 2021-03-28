@@ -1,9 +1,4 @@
-from queue import Queue
+direction = ""
 
-qlist = Queue(10)
-
-for i in range(10):
-    qlist.put(i)
-
-
-print("\u2606")
+while direction != "V" and direction != "H":
+    direction = input("Enter the row you wish to insert into: ")

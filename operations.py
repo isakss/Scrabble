@@ -16,9 +16,15 @@ class Operations:
     def get_next_turn(self):
         return self.turn_order.next_turn()
     
-    def play_letters(self, letter_list):
-        pass
-    
     def swap_letters(self, letter_list, curr_player):
         new_letters = self.letter_bag.swap_letters(letter_list)
         curr_player.add_letters(new_letters)
+
+    def get_value_at_pos(self, row, col):
+        return self.game_board.get_value_at_pos(row, col)
+
+    def play_letters(self, letter_list, row, col, direction):
+        self.game_board.add_word(letter_list, row, col, direction)
+
+    def print_board(self):
+        print(self.game_board)

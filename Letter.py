@@ -7,5 +7,5 @@ class Letter:
         self.right = right
     
     def __str__(self):
-        return "{}: {}".format(self.key, self.points)
+        return self.key
         
