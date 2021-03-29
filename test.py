@@ -1,4 +1,7 @@
-direction = ""
+list_test = [1, 2, 3]
+temp_list = list_test[:]
+for i, test in enumerate(list_test):
+    temp_list.pop(i)
 
-while direction != "V" and direction != "H":
-    direction = input("Enter the row you wish to insert into: ")
+print(temp_list)
+print(list_test)

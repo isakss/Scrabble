@@ -4,18 +4,20 @@ from random import Random
 
 class LetterBag:
     def __init__(self):
-        self.letters = []
+        self.letters = [] # To keep track on how many letters are left
         self.root = None
         for i in range(65,91):
             self.letters.append(chr(i))
-        
+        self.empty = False
         self.populate_bag()
         
     def populate_bag(self):
+        """Gets the letters from Bag as (letter,points,amount) then populates the tree and tries to get good spread by placing the middle first and then random"""
         the_bag = Bag().get_bag()
         the_current_value = the_bag.pop(len(self.letters)//2)
         self.insert(the_current_value)
         highest_index = len(the_bag) - 1
+
         for i in range(0,len(the_bag)):
             random_number = Random().randint(0,highest_index)
             the_current_value = the_bag.pop(random_number)
@@ -23,6 +25,7 @@ class LetterBag:
             highest_index -= 1
 
     def insert(self, key):
+        """Makes a letter case and puts it in the tree"""
         if self.root == None:
             self.root = Letter(key[0], key[1], key[2])
             return
@@ -38,6 +41,7 @@ class LetterBag:
                 new_node.left = Letter(key[0], key[1], key[2])
     
     def _find_node_rec(self, key, node):
+        """Either returns the node or the parent node where that key should be under"""
         if key > node.key and node.right != None:
             return self._find_node_rec(key, node.right)
         elif key < node.key and node.left != None:
@@ -57,6 +61,9 @@ class LetterBag:
             if the_letter.amount == 0:
                 self.letters.remove(the_letter.key)
                 self.remove(the_letter)
+                if len(self.letters) == 0:
+                    print("The bag is empty")
+                    self.empty = True
 
         return ret_list
 
@@ -64,7 +71,7 @@ class LetterBag:
         swap_amount = len(letters)
 
         for i in letters:
-            if i.amount == 0:
+            if i.amount == 0: # If the letter was removed from the tree
                 self.insert_back(i)
             
             i.amount += 1
@@ -73,6 +80,7 @@ class LetterBag:
         return ret_lis
 
     def insert_back(self, letter_class):
+        """Works like insert but just expects the letter class instead of a tuple"""
         if self.root == None:
             self.root = letter_class
             return
@@ -86,14 +94,6 @@ class LetterBag:
                 new_node.right = letter_class
             else:
                 new_node.left = letter_class
-
-    def find(self, key):
-        found_node = self._find_node_rec(key, self.root)
-
-        if found_node.key != key:
-            pass
-        else:
-            return found_node.data
     
     def remove(self, node):
         if node.left != None and node.right != None:
@@ -187,38 +187,3 @@ class LetterBag:
                     current_node.right = target_node.left
             else:
                 self._remove_none_or_one_child(current_node.right, target_node)
-    
-    def __getitem__(self, key):
-        return self.find(key)
-
-    def __str__(self):
-        ret_str = ""
-
-        ret_str += self._print_contents_inorder_rec(self.root)
-
-        return ret_str
-    
-    def _print_contents_inorder_rec(self, node):
-        if node == None:
-            return ""
-        
-        string = ""
-
-        string += self._print_contents_inorder_rec(node.left)
-
-        string += "{" + str(node.key) + ":" + str(node.points) + "}" + " "
-
-        string += self._print_contents_inorder_rec(node.right)
-
-        return string
-    
-    def __len__(self):
-        return self._get_size_rec(self.root)
-        
-    def _get_size_rec(self, node):
-        if node == None:
-            return 0
-        
-        return (self._get_size_rec(node.left) + 1 + self._get_size_rec(node.right))
-
-
