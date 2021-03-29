@@ -12,8 +12,8 @@ class Board:
         
         self.insert_into_board(7, 7, self.start_char)
     
-    def insert_into_board(self, x, y, value):
-        self.grid[x][y] = value
+    def insert_into_board(self, row, column, value):
+        self.grid[row][column] = value
 
     def get_value_at_pos(self, row, col):
         that_pos = self.grid[row][col]
@@ -24,6 +24,7 @@ class Board:
 
     def add_word(self, letter_list, row, col, direction):
         total_points = 0
+
         for letter in letter_list:
             self.insert_into_board(row, col, letter)
             total_points += letter.points

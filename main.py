@@ -65,6 +65,7 @@ if __name__ == "__main__":
         current_player = operations.get_next_turn()
         operations.print_board()
         print("\nPlayer {}, its your turn!\n".format(current_player.name))
+        print("Current score: {}\n".format(current_player.display_score()))
         print("These are your letters:\n{}".format(current_player.display_letters()))
 
         option_input = "4"
@@ -102,6 +103,7 @@ if __name__ == "__main__":
                             else:
                                 row_input = row_input - i
                     the_point = operations.play_letters(new_list, row_input, column_input, direction)
+                    current_player.score += the_point
             elif option_input == "2":
                 letter_list = choose_letters(current_player)
                 if letter_list == None:
@@ -111,7 +113,6 @@ if __name__ == "__main__":
             else:
                 continue
 
-        input()
 
 
 

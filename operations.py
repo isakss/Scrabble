@@ -24,7 +24,7 @@ class Operations:
         return self.game_board.get_value_at_pos(row, col)
 
     def play_letters(self, letter_list, row, col, direction):
-        self.game_board.add_word(letter_list, row, col, direction)
+        return self.game_board.add_word(letter_list, row, col, direction)
 
     def print_board(self):
         print(self.game_board)
